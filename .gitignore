@@ -4,6 +4,7 @@ Build/
 Builds/
 Logs/
 obj/
+.idea/
 .vs/
 *.csproj
 *.unityproj
