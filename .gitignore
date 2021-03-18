@@ -1,0 +1,15 @@
+Library/
+Temp/
+Build/
+Builds/
+Logs/
+obj/
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*TextMesh Pro/
+*TextMesh Pro.meta
+log.txt
+Recordings/
