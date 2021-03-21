@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace MovieListing {
     public class ScreenController : MonoBehaviour {
-        [SerializeField] private GameObject _parent = null;
+        [SerializeField] private EntriesContainer _parent = null;
         [SerializeField] private GameObject _selectedEntry = null;
         [SerializeField] private EntrySettings _entrySettings = null;
         [SerializeField] private int _numberOfEntriesPerPage = 50;
@@ -14,22 +14,21 @@ namespace MovieListing {
         private IParser _parser;
         private IFileData _fileData;
         
-        /// <summary>
-        /// Used in button event
-        /// </summary>
-        public void HideSelectedEntry() {
-            _selectedEntry.SetActive(false);
-        }
-        
-        private void Awake() {
+        void Awake() {
             Debug.Assert(_entrySettings != null, "Please assign an EntrySettings to SceneController");
         }
 
         void Start() {
             _parser = new CsvParser();
-            // _fileData = _parser.ParseFromStreamingAssets("movie_metadata.csv");
             _fileData = _parser.ParseFromResources("movie_metadata");
             CreateData();
+        }
+        
+        /// <summary>
+        /// Used in button event
+        /// </summary>
+        public void HideSelectedEntry() {
+            _selectedEntry.SetActive(false);
         }
 
         private void CreateData() {
@@ -40,16 +39,16 @@ namespace MovieListing {
                 entryGo = GameObject.Instantiate(_entrySettings.EntryPrefab, _parent.transform);
                 SetEntryButtonAction(entryGo.GetComponent<Button>());
                 foreach (var header in _entrySettings.HeadersToUse) {
-                    if (_fileData.GetHeaders().TryGetValue(header, out headerIdx)) {
+                    if (_fileData.GetHeaders().TryGetValue(header.HeaderName, out headerIdx)) {
                         entryValue = _fileData.GetEntry(i)[headerIdx];
-                        CreateEntryItem(entryGo, entryValue);
+                        CreateEntryItem(entryGo, entryValue, header.Width);
                     }else
                         Debug.LogWarning("Header '" + header + "' doesn't exist in the data headers.");
                 }
             }
         }
 
-        private void CreateEntryItem(GameObject entry, string value) {
+        private void CreateEntryItem(GameObject entry, string value, float componentWidth) {
             var go = new GameObject(value);
             go.transform.SetParent(entry.transform);
             var textMesh = go.AddComponent<TextMeshProUGUI>();
@@ -61,6 +60,9 @@ namespace MovieListing {
                 textMesh.alignment = itemSettings.Alignment;
                 textMesh.color = itemSettings.Color;
             }
+            
+            var entryRect = go.GetComponent<RectTransform>(); 
+            entryRect.sizeDelta = new Vector2( _parent.GetWidth(componentWidth), entryRect.sizeDelta.y);
         }
 
         private void SetEntryButtonAction(Button entryButton) {

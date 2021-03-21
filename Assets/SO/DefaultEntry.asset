@@ -16,6 +16,9 @@ MonoBehaviour:
     type: 3}
   _itemSettings: {fileID: 11400000, guid: ec9c215df6de2c145bc986d7b40301db, type: 2}
   _headersToUse:
-  - movie_title
-  - genres
-  - title_year
+  - HeaderName: movie_title
+    Width: 45
+  - HeaderName: genres
+    Width: 30
+  - HeaderName: title_year
+    Width: 25
