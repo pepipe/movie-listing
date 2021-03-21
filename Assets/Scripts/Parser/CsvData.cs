@@ -18,8 +18,12 @@ namespace MovieListing.Parser {
       return _headers;
     }
 
+    public List<List<string>> GetEntries() {
+      return _data;
+    }
+
     public List<string> GetEntry(int index) {
-      return index > 0 && index < _data.Count ? 
+      return index >= 0 && index < _data.Count ? 
         _data[index] : 
         new List<string>();
     }

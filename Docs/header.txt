@@ -26,3 +26,11 @@ actor_2_facebook_likes,
 imdb_score,
 aspect_ratio,
 movie_facebook_likes
+
+movie_title,
+director_name,
+genres (use the first 2)
+language
+country
+title_year
+content_rating
