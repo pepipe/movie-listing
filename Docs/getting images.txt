@@ -1,0 +1,5 @@
+https://image.tmdb.org/t/p/w300/6EiRUJpuoeQPghrs3YNktfnqOVh.jpg
+
+
+calculating h and minutes:
+178m = 178 / 60 = 2,97 -> 2h and 0.97 * 60 = 2h  -> 2h 58m

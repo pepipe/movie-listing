@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2262967141766175859}
   - component: {fileID: 2262967141766175868}
   m_Layer: 5
-  m_Name: title
+  m_Name: entry_item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
