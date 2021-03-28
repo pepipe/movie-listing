@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3722415}
   - component: {fileID: 3722414}
   m_Layer: 5
-  m_Name: MovieHeader
+  m_Name: MovieHeaderPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,6 +188,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3722412}
   m_CullTransparentMesh: 0
+--- !u!1 &34176729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34176731}
+  - component: {fileID: 34176730}
+  m_Layer: 0
+  m_Name: MovieDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &34176730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34176729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac1f8ba8f82d1b46bfa6eaa4b7a6ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseUrl: https://api.themoviedb.org/3/find/
+  suffixUrl: '&language=en-US&external_source=imdb_id'
+  imagesBaseUrl: https://image.tmdb.org/t/p/w300/
+--- !u!4 &34176731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34176729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43073369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,7 +1131,7 @@ RectTransform:
   - {fileID: 828506205}
   - {fileID: 618963403}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1104,7 +1150,7 @@ GameObject:
   - component: {fileID: 530430640}
   - component: {fileID: 530430639}
   m_Layer: 5
-  m_Name: BackDrop
+  m_Name: HeaderImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1257,8 +1303,9 @@ GameObject:
   - component: {fileID: 618963403}
   - component: {fileID: 618963405}
   - component: {fileID: 618963404}
+  - component: {fileID: 618963406}
   m_Layer: 5
-  m_Name: SelectedEntry
+  m_Name: SingleEntryView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,6 +1370,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618963402}
   m_CullTransparentMesh: 0
+--- !u!114 &618963406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618963402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f95f53e7d982484ea8ce0f596db6570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restApi: {fileID: 34176730}
+  headerImage: {fileID: 530430639}
+  posterImage: {fileID: 904487798}
+  movieTitle: {fileID: 1601592993}
+  movieYear: {fileID: 494666780}
+  movieRating: {fileID: 43073371}
+  movieDuration: {fileID: 232002275}
+  genresText:
+  - {fileID: 821203059}
+  - {fileID: 691885994}
+  - {fileID: 960915397}
+  - {fileID: 763611378}
+  movieTitleKey: movie_title
+  movieYearKey: title_year
+  movieRatingKey: content_rating
+  movieDurationKey: duration
+  movieGenresKey: genres
+  movieImdbLinkKey: movie_imdb_link
 --- !u!1 &634990433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,7 +1581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691173090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 395.27188, y: 1250.5459, z: 9.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1523,10 +1600,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pagesText: {fileID: 1750294022}
-  _pagesTextSuffix: 'Page: '
+  _pagesTextPrefix: 'Page: '
   _prevButton: {fileID: 346343741}
   _nextButton: {fileID: 339309951}
-  singleElementView: {fileID: 618963402}
+  singleEntryView: {fileID: 618963406}
 --- !u!1 &691885992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2344,7 +2421,7 @@ GameObject:
   - component: {fileID: 872146155}
   - component: {fileID: 872146154}
   m_Layer: 5
-  m_Name: MovieHeader
+  m_Name: HeaderImagePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2751,9 +2828,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fileToLoad: movie_metadata
   parent: {fileID: 1019230945}
-  singleElementView: {fileID: 618963402}
+  singleEntryView: {fileID: 618963402}
   entrySettings: {fileID: 11400000, guid: e2f693a55e9416643a38bac5e4623511, type: 2}
-  startPage: 1
+  startPage: 0
   entriesPerPage: 50
 --- !u!4 &1025229389
 Transform:
@@ -2855,8 +2932,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 55
-  m_fontSizeBase: 55
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2991,7 +3068,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1750294020
 GameObject:
@@ -3161,7 +3238,7 @@ GameObject:
   - component: {fileID: 1888732449}
   - component: {fileID: 1888732448}
   m_Layer: 5
-  m_Name: MovieInfo
+  m_Name: MovieInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3238,7 +3315,7 @@ GameObject:
   - component: {fileID: 2029659267}
   - component: {fileID: 2029659266}
   m_Layer: 5
-  m_Name: MovieInfoBulk
+  m_Name: MovieInfoBulkPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

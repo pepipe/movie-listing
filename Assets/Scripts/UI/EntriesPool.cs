@@ -7,16 +7,16 @@ namespace UI
 {
     public class EntriesPool
     {
+        private readonly SceneController _controller;
         private readonly EntrySettings _entrySettings;
         private readonly EntriesContainer _container;
-        private readonly GameObject _singleElementView;
         private readonly List<GameObject> _entries;
 
         public EntriesPool(EntrySettings settings, EntriesContainer container, 
-                                GameObject singleElementView, int entriesNumber) {
+                                SceneController controller, int entriesNumber) {
             _entrySettings = settings;
             _container = container;
-            _singleElementView = singleElementView;
+            _controller = controller;
             _entries = new List<GameObject>(entriesNumber);
             CreateEntries(entriesNumber);
         }
@@ -27,7 +27,7 @@ namespace UI
             }
         }
 
-        public void SetEntriesData(Dictionary<string, int> headers, List<List<string>> entriesData) {
+        public void SetEntriesData(Dictionary<string, int> headers, int startEntryIndex, List<List<string>> entriesData) {
             int headerIdx;
             string entryValue;
             GameObject entryGo;
@@ -44,6 +44,7 @@ namespace UI
                         ++headerEntryIndex;
                     }
                 }
+                SetEntryButtonAction(entryGo.GetComponent<Button>(), startEntryIndex + i);
                 entryGo.SetActive(true);
             }
         }
@@ -58,16 +59,11 @@ namespace UI
                 var entryGo = Object.Instantiate(_entrySettings.EntryPrefab, _container.transform);
                 entryGo.name = "Entry_" + i;
                 entryGo.SetActive(false);
-                SetEntryButtonAction(entryGo.GetComponent<Button>());
                 foreach (var header in _entrySettings.HeadersToUse) 
                     CreateEntryItem(entryGo, header);
 
                 _entries.Add(entryGo);
             }
-        }
-        
-        private void SetEntryButtonAction(Button entryButton) {
-            entryButton.onClick.AddListener(() => _singleElementView.SetActive(true));
         }
 
         private void CreateEntryItem(GameObject entry, HeaderSetting header) {
@@ -87,6 +83,10 @@ namespace UI
             
             var entryRect = go.GetComponent<RectTransform>(); 
             entryRect.sizeDelta = new Vector2( _container.GetWidth(header.width), entryRect.sizeDelta.y);
+        }
+        
+        private void SetEntryButtonAction(Button entryButton, int entryIndex) {
+            entryButton.onClick.AddListener(() => _controller.CallEntryClick(entryIndex));
         }
     }
 }
