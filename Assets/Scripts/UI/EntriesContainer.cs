@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace MovieListing.UI {
+namespace UI {
     public class EntriesContainer : MonoBehaviour {
         private float _containerWidth;
         
-        void Start() {
+        private void Awake() {
             var rt = transform.parent.GetComponent<RectTransform>();
             _containerWidth = Screen.width + rt.sizeDelta.x * rt.localScale.x;
         }

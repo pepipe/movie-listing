@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67c2791b0b5081459b7d3fd450c2093, type: 3}
   m_Name: DefaultItem
   m_EditorClassIdentifier: 
-  _font: {fileID: 11400000, guid: ca6fc003ccdadb941afc701d4000c623, type: 2}
-  _fontSize: 36
-  _alignment: 514
-  _color: {r: 0, g: 0, b: 0, a: 1}
+  font: {fileID: 11400000, guid: ca6fc003ccdadb941afc701d4000c623, type: 2}
+  fontSize: 36
+  alignment: 513
+  color: {r: 0, g: 0, b: 0, a: 1}

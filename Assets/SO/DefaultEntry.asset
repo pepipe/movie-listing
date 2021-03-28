@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c6381534c9e5f4e93d6c8a13fe24cd, type: 3}
   m_Name: DefaultEntry
   m_EditorClassIdentifier: 
-  _entryPrefab: {fileID: 4394699099447202070, guid: 4957d8082fb1d2d4e86006830930f0a1,
+  entryPrefab: {fileID: 4394699099447202070, guid: 4957d8082fb1d2d4e86006830930f0a1,
     type: 3}
-  _itemSettings: {fileID: 11400000, guid: ec9c215df6de2c145bc986d7b40301db, type: 2}
-  _headersToUse:
-  - HeaderName: movie_title
-    Width: 45
-  - HeaderName: genres
-    Width: 30
-  - HeaderName: title_year
-    Width: 25
+  itemSettings: {fileID: 11400000, guid: ec9c215df6de2c145bc986d7b40301db, type: 2}
+  headersToUse:
+  - headerName: movie_title
+    width: 45
+  - headerName: genres
+    width: 35
+  - headerName: title_year
+    width: 25

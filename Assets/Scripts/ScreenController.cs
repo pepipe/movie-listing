@@ -1,72 +1,83 @@
-﻿using MovieListing.Parser;
-using MovieListing.UI;
-using UnityEngine;
+﻿using System.Linq;
+using Parser;
 using TMPro;
+using UI;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace MovieListing {
-    public class ScreenController : MonoBehaviour {
-        [SerializeField] private EntriesContainer _parent = null;
-        [SerializeField] private GameObject _selectedEntry = null;
-        [SerializeField] private EntrySettings _entrySettings = null;
-        [SerializeField] private int _numberOfEntriesPerPage = 50;
+public class ScreenController : MonoBehaviour {
+    [SerializeField] private EntriesContainer parent = null;
+    [SerializeField] private GameObject singleElementView = null;
+    [SerializeField] private EntrySettings entrySettings = null;
+    [SerializeField] private int numberOfEntriesPerPage = 50;
 
-        private IParser _parser;
-        private IFileData _fileData;
+    private IParser _parser;
+    private IFileData _fileData;
+    private EntriesPool _entriesPool;
+    private int _currStartIdx = 0;
         
-        void Awake() {
-            Debug.Assert(_entrySettings != null, "Please assign an EntrySettings to SceneController");
-        }
+    private void Awake() {
+        Debug.Assert(entrySettings != null, "Please assign an EntrySettings to SceneController");
+        _entriesPool = new EntriesPool(entrySettings, parent, singleElementView, numberOfEntriesPerPage);
+    }
 
-        void Start() {
-            _parser = new CsvParser();
-            _fileData = _parser.ParseFromResources("movie_metadata");
-            CreateData();
-        }
+    private void Start() {
+        //Read data 
+        _parser = new CsvParser();
+        _fileData = _parser.ParseFromResources("movie_metadata");
+             
+        // //Build UI elements
+        _entriesPool.SetEntriesData(_fileData.GetHeaders(),
+                                    _fileData.GetEntries()
+                                                .Where((v, i) => 
+                                                        _currStartIdx <= i && i < _currStartIdx + numberOfEntriesPerPage)
+                                                .ToList());
+        _entriesPool.SetPoolActive(true);
+        // CreateData();
+    }   
         
-        /// <summary>
-        /// Used in button event
-        /// </summary>
-        public void HideSelectedEntry() {
-            _selectedEntry.SetActive(false);
-        }
+    /// <summary>
+    /// Used in button event
+    /// </summary>
+    public void HideSelectedEntry() {
+        singleElementView.SetActive(false);
+    }
 
-        private void CreateData() {
-            int headerIdx;
-            string entryValue;
-            GameObject entryGo;
-            for(var i = 0; i < _numberOfEntriesPerPage; ++i){
-                entryGo = GameObject.Instantiate(_entrySettings.EntryPrefab, _parent.transform);
-                SetEntryButtonAction(entryGo.GetComponent<Button>());
-                foreach (var header in _entrySettings.HeadersToUse) {
-                    if (_fileData.GetHeaders().TryGetValue(header.HeaderName, out headerIdx)) {
-                        entryValue = _fileData.GetEntry(i)[headerIdx];
-                        CreateEntryItem(entryGo, entryValue, header.Width);
-                    }else
-                        Debug.LogWarning("Header '" + header + "' doesn't exist in the data headers.");
-                }
+    private void CreateData() {
+        int headerIdx;
+        string entryValue;
+        GameObject entryGo;
+        for(var i = 0; i < numberOfEntriesPerPage; ++i){
+            entryGo = Instantiate(entrySettings.EntryPrefab, parent.transform);
+            SetEntryButtonAction(entryGo.GetComponent<Button>());
+            foreach (var header in entrySettings.HeadersToUse) {
+                if (_fileData.GetHeaders().TryGetValue(header.headerName, out headerIdx)) {
+                    entryValue = _fileData.GetEntry(i)[headerIdx];
+                    CreateEntryItem(entryGo, entryValue, header.width);
+                }else
+                    Debug.LogWarning("Header '" + header + "' doesn't exist in the data headers.");
             }
         }
+    }
 
-        private void CreateEntryItem(GameObject entry, string value, float componentWidth) {
-            var go = new GameObject(value);
-            go.transform.SetParent(entry.transform);
-            var textMesh = go.AddComponent<TextMeshProUGUI>();
-            textMesh.text = value;
-            var itemSettings = _entrySettings.ItemSettings;
-            if (itemSettings != null) {
-                textMesh.font = itemSettings.Font;
-                textMesh.fontSize = itemSettings.FontSize;
-                textMesh.alignment = itemSettings.Alignment;
-                textMesh.color = itemSettings.Color;
-            }
+    private void CreateEntryItem(GameObject entry, string value, float componentWidth) {
+        var go = new GameObject(value);
+        go.transform.SetParent(entry.transform);
+        var textMesh = go.AddComponent<TextMeshProUGUI>();
+        textMesh.text = value;
+        var itemSettings = entrySettings.ItemSettings;
+        if (itemSettings != null) {
+            textMesh.font = itemSettings.Font;
+            textMesh.fontSize = itemSettings.FontSize;
+            textMesh.alignment = itemSettings.Alignment;
+            textMesh.color = itemSettings.Color;
+        }
             
-            var entryRect = go.GetComponent<RectTransform>(); 
-            entryRect.sizeDelta = new Vector2( _parent.GetWidth(componentWidth), entryRect.sizeDelta.y);
-        }
+        var entryRect = go.GetComponent<RectTransform>(); 
+        entryRect.sizeDelta = new Vector2( parent.GetWidth(componentWidth), entryRect.sizeDelta.y);
+    }
 
-        private void SetEntryButtonAction(Button entryButton) {
-            entryButton.onClick.AddListener(() => _selectedEntry.SetActive(true));
-        }
+    private void SetEntryButtonAction(Button entryButton) {
+        entryButton.onClick.AddListener(() => singleElementView.SetActive(true));
     }
 }
