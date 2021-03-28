@@ -8,10 +8,12 @@ using UnityEngine;
 public class SceneController : MonoBehaviour {
     public delegate void ChangePageHander(int currPage, int totalPages);
     public delegate void OnEntryClick(int entryIndex);
+    public delegate void OnBackButtonClick();
 
     public event ChangePageHander PrevPageEvent;
     public event ChangePageHander NextPageEvent;
     public event OnEntryClick OnEntryClickEvent;
+    public event OnBackButtonClick OnBackClickEvent;
 
     [Tooltip("CSV file to load from Resources folder (without extension)")]
     [SerializeField] private string fileToLoad = "movie_metadata";
@@ -31,32 +33,27 @@ public class SceneController : MonoBehaviour {
     private void Awake() {
         Debug.Assert(entrySettings != null, "Please assign an EntrySettings to SceneController");
         _entriesPool = new EntriesPool(entrySettings, parent, this, entriesPerPage);
-    }
-
-    private void Start() {
-        //Read data 
+        
         _parser = new CsvParser();
         _fileData = _parser.ParseFromResources(fileToLoad);
         _totalPages = _fileData.EntriesCount() % entriesPerPage == 0 ?
-                        _fileData.EntriesCount() / entriesPerPage : 
-                        (_fileData.EntriesCount() / entriesPerPage) + 1;
-        
-        // //Build UI elements
+            _fileData.EntriesCount() / entriesPerPage : 
+            (_fileData.EntriesCount() / entriesPerPage) + 1;
+    }
+
+    private void Start() {
         _currPage = startPage;
         PrevPageEvent?.Invoke(_currPage, _totalPages);//to init page text and disable prev button
         GetPage();
     }
-
-    /// <summary>
+    
     /// Used in button event
-    /// </summary>
     public void HideSelectedEntry() {
         singleEntryView.SetActive(false);
+        OnBackClickEvent?.Invoke();
     }
-
-    /// <summary>
+    
     /// Used in button event
-    /// </summary>
     public void PrevPage() {
         if (_currPage - 1 < 0) return;
 
@@ -65,9 +62,7 @@ public class SceneController : MonoBehaviour {
         PrevPageEvent?.Invoke(_currPage, _totalPages);
     }
     
-    /// <summary>
     /// Used in button event
-    /// </summary>
     public void NextPage() {
         if (_currPage + 1 >= _totalPages) return;
 
@@ -87,7 +82,7 @@ public class SceneController : MonoBehaviour {
     public Dictionary<string, int> GetEntriesHeaders() {
         return _fileData.GetHeaders();
     }
-    
+
     private void GetPage() {
         _entriesPool.SetPoolActive(false);
         var pageStartIdx = _currPage * entriesPerPage;

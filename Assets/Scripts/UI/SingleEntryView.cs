@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Net;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ using UnityEngine.Networking;
 namespace UI {
   public class SingleEntryView : MonoBehaviour {
     [SerializeField] private MovieDBRestApi restApi;
+    [SerializeField] private GameObject bulkEntryPrefab;
     
     [Header("References")]
     [SerializeField] private Image headerImage;
@@ -19,6 +21,7 @@ namespace UI {
     [SerializeField] private TextMeshProUGUI movieRating;
     [SerializeField] private TextMeshProUGUI movieDuration;
     [SerializeField] private TextMeshProUGUI[] genresText;
+    [SerializeField] private EntriesContainer bulkEntriesParent;
     
     [Header("CSV keys mapping")] 
     [SerializeField] private string movieTitleKey = "movie_title";
@@ -28,12 +31,26 @@ namespace UI {
     [SerializeField] private string movieGenresKey = "genres";
     [SerializeField] private string movieImdbLinkKey = "movie_imdb_link";
 
+    private SceneController _sceneController;
+    private BulkInfoPool _bulkInfoPool;
+
+    private void Awake() {
+      _sceneController = FindObjectOfType<SceneController>();
+    }
+
+    private void Start() {
+      _bulkInfoPool = new BulkInfoPool(bulkEntryPrefab, bulkEntriesParent, _sceneController.GetEntriesHeaders().Count);
+      gameObject.SetActive(false);
+    }
+
     private void OnEnable() {
       restApi.OnRequestEndEvent += ChangeImages;
+      _sceneController.OnBackClickEvent += HideEntries;
     }
 
     private void OnDisable() {
       restApi.OnRequestEndEvent -= ChangeImages;
+      _sceneController.OnBackClickEvent -= HideEntries;
     }
 
     public void ShowEntry(Dictionary<string, int> headers, List<string> entry) {
@@ -54,8 +71,14 @@ namespace UI {
       
       headers.TryGetValue(movieImdbLinkKey, out valueIndex);
       GetImages(entry[valueIndex]);
+
+      FillInfoBulk(headers, entry);
       
       gameObject.SetActive(true);
+    }
+
+    private void FillInfoBulk(Dictionary<string, int> headers, List<string> entry) {
+      _bulkInfoPool.SetEntriesData(headers.Keys.ToList(), entry);
     }
 
     private string ConvertDuration(string duration) {
@@ -102,13 +125,16 @@ namespace UI {
       if(request.isNetworkError || request.isHttpError) 
         Debug.Log(request.error);
       else {
-        // image.material.mainTexture = ((DownloadHandlerTexture) request.downloadHandler).texture;
         var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
         image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), 
                                       image.rectTransform.pivot, image.pixelsPerUnit);
         
         image.gameObject.SetActive(true);
       }
+    }
+    
+    private void HideEntries() {
+      _bulkInfoPool.SetPoolActive(false);
     }
   }
 }
