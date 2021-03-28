@@ -34,5 +34,9 @@ namespace Parser {
                 _data[entryIndex][headerIdx] : 
                 string.Empty;
     }
+
+    public int EntriesCount() {
+      return _data.Count;
+    }
   }
 }

@@ -10,5 +10,7 @@ namespace Parser {
     List<List<string>> GetEntries();
     List<string> GetEntry(int index);
     string GetValue(string header, int entryIndex);
+
+    int EntriesCount();
   }
 }
