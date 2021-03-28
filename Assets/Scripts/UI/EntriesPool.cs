@@ -44,6 +44,7 @@ namespace UI
                         ++headerEntryIndex;
                     }
                 }
+                entryGo.SetActive(true);
             }
         }
 

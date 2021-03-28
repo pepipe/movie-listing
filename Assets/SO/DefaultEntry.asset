@@ -21,4 +21,4 @@ MonoBehaviour:
   - headerName: genres
     width: 35
   - headerName: title_year
-    width: 25
+    width: 20
