@@ -88,7 +88,7 @@ namespace UI {
     }
     
     private void ChangeImages(MovieDbResponse response) {
-      if(response == null && response.movie_results.Length > 0) return;
+      if(response == null || response.movie_results.Length == 0) return;
       
       var movieResult = response.movie_results[0];
       StartCoroutine(DownloadImage(restApi.ImagesBaseUrl + movieResult.backdrop_path, true));
