@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScreenController : MonoBehaviour {
+    [Tooltip("CSV file to load from Resources folder (without extension)")]
+    [SerializeField] private string fileToLoad = "movie_metadata";
+    [Tooltip("Container for the rows of data")]
     [SerializeField] private EntriesContainer parent = null;
     [SerializeField] private GameObject singleElementView = null;
     [SerializeField] private EntrySettings entrySettings = null;
@@ -24,7 +27,7 @@ public class ScreenController : MonoBehaviour {
     private void Start() {
         //Read data 
         _parser = new CsvParser();
-        _fileData = _parser.ParseFromResources("movie_metadata");
+        _fileData = _parser.ParseFromResources(fileToLoad);
              
         // //Build UI elements
         _entriesPool.SetEntriesData(_fileData.GetHeaders(),
