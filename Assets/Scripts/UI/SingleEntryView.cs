@@ -33,6 +33,8 @@ namespace UI {
 
     private SceneController _sceneController;
     private BulkInfoPool _bulkInfoPool;
+    private Coroutine _headerImageRequest;
+    private Coroutine _posterImageRequest;
 
     private void Awake() {
       _sceneController = FindObjectOfType<SceneController>();
@@ -114,8 +116,8 @@ namespace UI {
       if(response == null || response.movie_results.Length == 0) return;
       
       var movieResult = response.movie_results[0];
-      StartCoroutine(DownloadImage(restApi.ImagesBaseUrl + movieResult.backdrop_path, true));
-      StartCoroutine(DownloadImage(restApi.ImagesBaseUrl + movieResult.poster_path, false));
+      _headerImageRequest = StartCoroutine(DownloadImage(restApi.ImagesBaseUrl + movieResult.backdrop_path, true));
+      _posterImageRequest = StartCoroutine(DownloadImage(restApi.ImagesBaseUrl + movieResult.poster_path, false));
     }
 
     private IEnumerator DownloadImage(string imageUrl, bool isHeader) {
@@ -135,6 +137,8 @@ namespace UI {
     
     private void HideEntries() {
       _bulkInfoPool.SetPoolActive(false);
+      StopCoroutine(_headerImageRequest);
+      StopCoroutine(_posterImageRequest);
     }
   }
 }
