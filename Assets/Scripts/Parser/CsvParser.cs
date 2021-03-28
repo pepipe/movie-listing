@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace MovieListing.Parser {
+namespace Parser {
     public class CsvParser : IParser {
         // private void Start() {
         //     Stopwatch s = new Stopwatch();

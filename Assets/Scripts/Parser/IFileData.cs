@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MovieListing.Parser {
+namespace Parser {
   public interface IFileData {
     /// <summary>
     /// Headers is a map with the name of header and the index in data

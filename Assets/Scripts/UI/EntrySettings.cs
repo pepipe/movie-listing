@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MovieListing.UI
+namespace UI
 {
     [Serializable]
     public struct HeaderSetting {
-        public string HeaderName;
+        public string headerName;
         [Tooltip("Width of the header in percentage.")]
-        public float Width;
+        public float width;
     }
     
     [CreateAssetMenu(menuName = "MovieListings/Entry Settings", order = 1, fileName = "EntrySettings")]
     public class EntrySettings : ScriptableObject {
-        [SerializeField] private GameObject _entryPrefab = null;
-        [SerializeField] private EntryItemSettings _itemSettings = null;
-        [SerializeField] private List<HeaderSetting> _headersToUse = null;
+        [SerializeField] private GameObject entryPrefab = null;
+        [SerializeField] private EntryItemSettings itemSettings = null;
+        [SerializeField] private List<HeaderSetting> headersToUse = null;
         
-        public GameObject EntryPrefab => _entryPrefab;
-        public EntryItemSettings ItemSettings => _itemSettings;
-        public IEnumerable<HeaderSetting> HeadersToUse => _headersToUse;
+        public GameObject EntryPrefab => entryPrefab;
+        public EntryItemSettings ItemSettings => itemSettings;
+        public IEnumerable<HeaderSetting> HeadersToUse => headersToUse;
     }
 }

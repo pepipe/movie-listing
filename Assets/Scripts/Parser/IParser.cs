@@ -1,4 +1,4 @@
-﻿namespace MovieListing.Parser {
+﻿namespace Parser {
   public interface IParser {
     IFileData Parse(string pathToFile, string csvFileName);
     IFileData ParseFromStreamingAssets(string csvFileName);

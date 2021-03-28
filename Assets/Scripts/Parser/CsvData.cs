@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MovieListing.Parser {
+namespace Parser {
 
   public class CsvData : IFileData {
     private readonly Dictionary<string, int> _headers;
