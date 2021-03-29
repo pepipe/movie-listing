@@ -217,9 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac1f8ba8f82d1b46bfa6eaa4b7a6ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUrl: https://api.themoviedb.org/3/find/
-  suffixUrl: '&language=en-US&external_source=imdb_id'
-  imagesBaseUrl: https://image.tmdb.org/t/p/w300/
+  apiSettings: {fileID: 11400000, guid: 2fa62dd77ef914c41b3ae5a5ac21925d, type: 2}
 --- !u!4 &34176731
 Transform:
   m_ObjectHideFlags: 0
@@ -1533,10 +1531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d740734fd17a647bc3cd4630949748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pagesText: {fileID: 1750294022}
-  _pagesTextPrefix: 'Page: '
-  _prevButton: {fileID: 346343741}
-  _nextButton: {fileID: 339309951}
+  pagesText: {fileID: 1750294022}
+  pagesTextPrefix: 'Page: '
+  prevButton: {fileID: 346343741}
+  nextButton: {fileID: 339309951}
   singleEntryView: {fileID: 618963406}
 --- !u!1 &691885992
 GameObject:
@@ -2602,12 +2600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10e9de383a5d2f469c82c63149e5d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileToLoad: movie_metadata
+  _settings: {fileID: 11400000, guid: ea49c12e5df602b46b18734559c817ff, type: 2}
   parent: {fileID: 1019230945}
   singleEntryView: {fileID: 618963402}
-  entrySettings: {fileID: 11400000, guid: e2f693a55e9416643a38bac5e4623511, type: 2}
   startPage: 0
-  entriesPerPage: 50
 --- !u!4 &1025229389
 Transform:
   m_ObjectHideFlags: 0

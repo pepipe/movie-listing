@@ -17,11 +17,11 @@ namespace Settings
     public int wordsToShow;
   }
   
-  [CreateAssetMenu(menuName = "MovieListings/Entry Item Settings", order = 2, fileName = "EntryItemSettings")]
+  [CreateAssetMenu(menuName = "MovieListings/Entry Item Settings", order = 3, fileName = "EntryItemSettings")]
   public class EntryItemSettings : ScriptableObject {
     [SerializeField] private HeaderSetting header;
     [SerializeField] private GameObject customEntryItemPrefab;
-    [SerializeField] private bool splitEntryValue = false; 
+    [SerializeField] private bool splitEntryValue; 
     [SerializeField] private SplitSetting splitSetting;
 
     public HeaderSetting Header => header;

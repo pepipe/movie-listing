@@ -16,14 +16,11 @@ public class SceneController : MonoBehaviour {
     public event OnEntryClick OnEntryClickEvent;
     public event OnBackButtonClick OnBackClickEvent;
 
-    [Tooltip("CSV file to load from Resources folder (without extension)")]
-    [SerializeField] private string fileToLoad = "movie_metadata";
+    [SerializeField] private GeneralSettings _settings;
     [Tooltip("Container for the rows of data")]
     [SerializeField] private EntriesContainer parent;
     [SerializeField] private GameObject singleEntryView;
-    [SerializeField] private EntrySettings entrySettings;
     [SerializeField] private int startPage;
-    [SerializeField] private int entriesPerPage = 50;
 
     private IParser _parser;
     private IFileData _fileData;
@@ -32,14 +29,14 @@ public class SceneController : MonoBehaviour {
     private int _totalPages;
 
     private void Awake() {
-        Debug.Assert(entrySettings != null, "Please assign an EntrySettings to SceneController");
-        _entriesPool = new EntriesPool(entrySettings, parent, this, entriesPerPage);
+        Debug.Assert(_settings != null, "Please assign Settings to SceneController");
+        _entriesPool = new EntriesPool(_settings.EntrySettings, parent, this, _settings.EntriesPerPage);
         
         _parser = new CsvParser();
-        _fileData = _parser.ParseFromResources(fileToLoad);
-        _totalPages = _fileData.EntriesCount() % entriesPerPage == 0 ?
-            _fileData.EntriesCount() / entriesPerPage : 
-            (_fileData.EntriesCount() / entriesPerPage) + 1;
+        _fileData = _parser.ParseFromResources(_settings.FileToLoad);
+        _totalPages = _fileData.EntriesCount() % _settings.EntriesPerPage == 0 ?
+            _fileData.EntriesCount() / _settings.EntriesPerPage : 
+            (_fileData.EntriesCount() / _settings.EntriesPerPage) + 1;
     }
 
     private void Start() {
@@ -86,8 +83,8 @@ public class SceneController : MonoBehaviour {
 
     private void GetPage() {
         _entriesPool.SetPoolActive(false);
-        var pageStartIdx = _currPage * entriesPerPage;
-        var pageEndIdx = Math.Min(pageStartIdx + entriesPerPage, _fileData.EntriesCount() - 1);
+        var pageStartIdx = _currPage * _settings.EntriesPerPage;
+        var pageEndIdx = Math.Min(pageStartIdx + _settings.EntriesPerPage, _fileData.EntriesCount() - 1);
         
         _entriesPool.SetEntriesData(_fileData.GetHeaders(),
             pageStartIdx,

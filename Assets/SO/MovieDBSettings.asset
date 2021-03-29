@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14de9ec752f0c164dabf58cdb3b30053, type: 3}
+  m_Name: MovieDBSettings
+  m_EditorClassIdentifier: 
+  apiKey: 2e6fc2dfd8039d7ff71f16631fe23c75
+  baseUrl: https://api.themoviedb.org/3/find/
+  suffixUrl: '&language=en-US&external_source=imdb_id'
+  imagesBaseUrl: https://image.tmdb.org/t/p/w300

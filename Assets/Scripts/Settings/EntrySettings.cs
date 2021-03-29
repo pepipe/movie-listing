@@ -6,7 +6,7 @@ namespace Settings
 {
     
     
-    [CreateAssetMenu(menuName = "MovieListings/Entry Settings", order = 1, fileName = "EntrySettings")]
+    [CreateAssetMenu(menuName = "MovieListings/Entry Settings", order = 2, fileName = "EntrySettings")]
     public class EntrySettings : ScriptableObject {
         [SerializeField] private GameObject entryPrefab = null;
         [Tooltip("Default prefab for entries. This will be override for an entry if that entry sets it's own prefab")]

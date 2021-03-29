@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
-    [SerializeField] private TextMeshProUGUI _pagesText = null;
+    [SerializeField] private TextMeshProUGUI pagesText;
     [Tooltip("Prefix that will appear near the currPage / totalPages")]
-    [SerializeField] private string _pagesTextPrefix = "Page: ";
-    [SerializeField] private Button _prevButton = null;
-    [SerializeField] private Button _nextButton = null;
-    [SerializeField] private SingleEntryView singleEntryView = null;
+    [SerializeField] private string pagesTextPrefix = "Page: ";
+    [SerializeField] private Button prevButton;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private SingleEntryView singleEntryView;
     
-    private SceneController _sceneController = null;
+    private SceneController _sceneController;
 
     private void Awake() {
         _sceneController = FindObjectOfType<SceneController>();
@@ -30,9 +30,9 @@ public class UIController : MonoBehaviour {
     }
 
     private void ChangePage(int currPage, int totalPages) {
-        _prevButton.interactable = currPage != 0 ? true : false;
-        _nextButton.interactable = currPage < totalPages - 1 ? true : false;
-        _pagesText.text = _pagesTextPrefix + ++currPage + " / " + totalPages;
+        prevButton.interactable = currPage != 0;
+        nextButton.interactable = currPage < totalPages - 1;
+        pagesText.text = pagesTextPrefix + ++currPage + " / " + totalPages;
     }
     
     private void ShowSingleElement(int entryIndex) {
