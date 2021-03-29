@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Settings;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,16 +29,12 @@ namespace UI
         }
 
         public void SetEntriesData(Dictionary<string, int> headers, int startEntryIndex, List<List<string>> entriesData) {
-            int headerIdx;
-            string entryValue;
-            GameObject entryGo;
-            int headerEntryIndex;
             for (var i = 0; i < entriesData.Count; ++i) {
-                headerEntryIndex = 0;
-                entryGo = _entries[i];
+                var headerEntryIndex = 0;
+                var entryGo = _entries[i];
                 foreach (var itemSettings in _entrySettings.ItemsSettings) {
-                    if (headers.TryGetValue(itemSettings.Header.headerName, out headerIdx)) {
-                        entryValue = entriesData[i][headerIdx];
+                    if (headers.TryGetValue(itemSettings.Header.headerName, out var headerIdx)) {
+                        var entryValue = entriesData[i][headerIdx];
                         if (itemSettings.SplitEntryValue) {
                             entryValue = SplitValue(entryValue, itemSettings.SplitSetting);
                         }
@@ -84,7 +81,7 @@ namespace UI
             var objPrefab = itemSettings.CustomEntryItemPrefab == null ? 
                                         _entrySettings.DefaultEntryItemPrefab : 
                                         itemSettings.CustomEntryItemPrefab;
-            var go = GameObject.Instantiate(objPrefab, entry.transform, true);
+            var go = Object.Instantiate(objPrefab, entry.transform, true);
             go.name = itemSettings.Header.headerName;
             var textMesh = go.GetComponent<TextMeshProUGUI>();
             textMesh.text = itemSettings.Header.headerName;

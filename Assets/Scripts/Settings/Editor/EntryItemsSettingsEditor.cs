@@ -1,6 +1,7 @@
-﻿using UnityEditor;
+﻿using UI;
+using UnityEditor;
 
-namespace UI.Editor {
+namespace Settings.Editor {
     [CustomEditor(typeof(EntryItemSettings))]
     public class EntryItemsSettingsEditor : UnityEditor.Editor {
         private SerializedProperty _split;

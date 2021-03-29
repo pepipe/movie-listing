@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace Settings
 {
   [Serializable]
   public struct HeaderSetting {

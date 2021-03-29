@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Parser;
+using Settings;
 using UI;
 using UnityEngine;
 
@@ -18,16 +19,16 @@ public class SceneController : MonoBehaviour {
     [Tooltip("CSV file to load from Resources folder (without extension)")]
     [SerializeField] private string fileToLoad = "movie_metadata";
     [Tooltip("Container for the rows of data")]
-    [SerializeField] private EntriesContainer parent = null;
-    [SerializeField] private GameObject singleEntryView = null;
-    [SerializeField] private EntrySettings entrySettings = null;
-    [SerializeField] private int startPage = 0;
+    [SerializeField] private EntriesContainer parent;
+    [SerializeField] private GameObject singleEntryView;
+    [SerializeField] private EntrySettings entrySettings;
+    [SerializeField] private int startPage;
     [SerializeField] private int entriesPerPage = 50;
 
     private IParser _parser;
     private IFileData _fileData;
     private EntriesPool _entriesPool;
-    private int _currPage = 0;
+    private int _currPage;
     private int _totalPages;
 
     private void Awake() {
