@@ -1,18 +1,34 @@
-﻿using TMPro;
+﻿using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace UI
 {
+  [Serializable]
+  public struct HeaderSetting {
+    [Tooltip("CSV header key")]
+    public string headerName;
+    [Tooltip("Width of the header in percentage.")]
+    public float width;
+  }
+
+  [Serializable]
+  public struct SplitSetting {
+    public char splitChar;
+    public int wordsToShow;
+  }
+  
   [CreateAssetMenu(menuName = "MovieListings/Entry Item Settings", order = 2, fileName = "EntryItemSettings")]
   public class EntryItemSettings : ScriptableObject {
-    [SerializeField] private TMP_FontAsset font = null;
-    [SerializeField] private float  fontSize;
-    [SerializeField] private TextAlignmentOptions alignment;
-    [SerializeField] private Color color;
+    [SerializeField] private HeaderSetting header;
+    [SerializeField] private GameObject customEntryItemPrefab;
+    [SerializeField] private bool splitEntryValue = false; 
+    [SerializeField] private SplitSetting splitSetting;
 
-    public TMP_FontAsset Font => font;
-    public float FontSize => fontSize;
-    public TextAlignmentOptions Alignment => alignment;
-    public Color Color => color;
+    public HeaderSetting Header => header;
+    public GameObject CustomEntryItemPrefab => customEntryItemPrefab;
+    public bool SplitEntryValue => splitEntryValue;
+    public SplitSetting SplitSetting => splitSetting;
   }
 }

@@ -4,21 +4,20 @@ using UnityEngine;
 
 namespace UI
 {
-    [Serializable]
-    public struct HeaderSetting {
-        public string headerName;
-        [Tooltip("Width of the header in percentage.")]
-        public float width;
-    }
+    
     
     [CreateAssetMenu(menuName = "MovieListings/Entry Settings", order = 1, fileName = "EntrySettings")]
     public class EntrySettings : ScriptableObject {
         [SerializeField] private GameObject entryPrefab = null;
-        [SerializeField] private EntryItemSettings itemSettings = null;
-        [SerializeField] private List<HeaderSetting> headersToUse = null;
+        [Tooltip("Default prefab for entries. This will be override for an entry if that entry sets it's own prefab")]
+        [SerializeField] private GameObject defaultEntryItemPrefab = null;
+        [Tooltip("List of each column settings")]
+        [SerializeField] private List<EntryItemSettings> itemsSettings = null;
+        
         
         public GameObject EntryPrefab => entryPrefab;
-        public EntryItemSettings ItemSettings => itemSettings;
-        public IEnumerable<HeaderSetting> HeadersToUse => headersToUse;
+        public GameObject DefaultEntryItemPrefab => defaultEntryItemPrefab;
+        public List<EntryItemSettings> ItemsSettings => itemsSettings;
+        
     }
 }

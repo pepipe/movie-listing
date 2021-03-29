@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryPrefab: {fileID: 4394699099447202070, guid: 4957d8082fb1d2d4e86006830930f0a1,
     type: 3}
-  itemSettings: {fileID: 11400000, guid: ec9c215df6de2c145bc986d7b40301db, type: 2}
-  headersToUse:
-  - headerName: movie_title
-    width: 45
-  - headerName: genres
-    width: 35
-  - headerName: title_year
-    width: 20
+  defaultEntryItemPrefab: {fileID: 2262967141766175870, guid: c58ccc8c84724684b82fdc06a3f24c58,
+    type: 3}
+  itemsSettings:
+  - {fileID: 11400000, guid: ec9c215df6de2c145bc986d7b40301db, type: 2}
+  - {fileID: 11400000, guid: ab0c717f8d6ba354aa542730cf154be5, type: 2}
+  - {fileID: 11400000, guid: 6893fde9b079d684ea156007e036c31f, type: 2}

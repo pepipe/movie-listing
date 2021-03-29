@@ -35,12 +35,13 @@ namespace UI
             for (var i = 0; i < entriesData.Count; ++i) {
                 headerEntryIndex = 0;
                 entryGo = _entries[i];
-                foreach (var header in _entrySettings.HeadersToUse) {
-                    if (headers.TryGetValue(header.headerName, out headerIdx)) {
+                foreach (var itemSettings in _entrySettings.ItemsSettings) {
+                    if (headers.TryGetValue(itemSettings.Header.headerName, out headerIdx)) {
                         entryValue = entriesData[i][headerIdx];
-                        SetEntryItemValue(entryGo.transform.GetChild(headerEntryIndex).gameObject,
-                                            header.headerName, 
-                                            entryValue);
+                        if (itemSettings.SplitEntryValue) {
+                            entryValue = SplitValue(entryValue, itemSettings.SplitSetting);
+                        }
+                        SetEntryItemValue(entryGo.transform.GetChild(headerEntryIndex).gameObject, entryValue);
                         ++headerEntryIndex;
                     }
                 }
@@ -49,7 +50,20 @@ namespace UI
             }
         }
 
-        private void SetEntryItemValue(GameObject entry, string headerName, string value) {
+        private string SplitValue(string entryValue, SplitSetting itemSettingsSplitSetting) {
+            var splits = entryValue.Split(itemSettingsSplitSetting.splitChar);
+            if (splits.Length == 1) return entryValue;
+            var result = "";
+            for (var i = 0; i < itemSettingsSplitSetting.wordsToShow; ++i) {
+                result += splits[i];
+                if (i < itemSettingsSplitSetting.wordsToShow - 1)
+                    result += " " + itemSettingsSplitSetting.splitChar + " ";
+            }
+
+            return result;
+        }
+
+        private void SetEntryItemValue(GameObject entry, string value) {
             var textMesh = entry.GetComponent<TextMeshProUGUI>();
             textMesh.text = value;
         }
@@ -59,30 +73,24 @@ namespace UI
                 var entryGo = Object.Instantiate(_entrySettings.EntryPrefab, _container.transform);
                 entryGo.name = "Entry_" + i;
                 entryGo.SetActive(false);
-                foreach (var header in _entrySettings.HeadersToUse) 
-                    CreateEntryItem(entryGo, header);
+                foreach (var itemSettings in _entrySettings.ItemsSettings) 
+                    CreateEntryItem(entryGo, itemSettings);
 
                 _entries.Add(entryGo);
             }
         }
 
-        private void CreateEntryItem(GameObject entry, HeaderSetting header) {
-            var go = new GameObject(header.headerName);
-            go.transform.SetParent(entry.transform);
-            var textMesh = go.AddComponent<TextMeshProUGUI>();
-            textMesh.text = header.headerName;
-            
-            var itemSettings = _entrySettings.ItemSettings;
-            if (itemSettings != null) {
-                textMesh.font = itemSettings.Font;
-                textMesh.fontSize = itemSettings.FontSize;
-                textMesh.alignment = itemSettings.Alignment;
-                textMesh.color = itemSettings.Color;
-                textMesh.enableWordWrapping = true;//TODO: maybe we want a prefab
-            }
-            
+        private void CreateEntryItem(GameObject entry, EntryItemSettings itemSettings) {
+            var objPrefab = itemSettings.CustomEntryItemPrefab == null ? 
+                                        _entrySettings.DefaultEntryItemPrefab : 
+                                        itemSettings.CustomEntryItemPrefab;
+            var go = GameObject.Instantiate(objPrefab, entry.transform, true);
+            go.name = itemSettings.Header.headerName;
+            var textMesh = go.GetComponent<TextMeshProUGUI>();
+            textMesh.text = itemSettings.Header.headerName;
+
             var entryRect = go.GetComponent<RectTransform>(); 
-            entryRect.sizeDelta = new Vector2( _container.GetWidth(header.width), entryRect.sizeDelta.y);
+            entryRect.sizeDelta = new Vector2( _container.GetWidth(itemSettings.Header.width), entryRect.sizeDelta.y);
         }
         
         private void SetEntryButtonAction(Button entryButton, int entryIndex) {
