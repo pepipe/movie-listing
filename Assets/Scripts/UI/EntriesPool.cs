@@ -86,6 +86,7 @@ namespace UI
         }
         
         private void SetEntryButtonAction(Button entryButton, int entryIndex) {
+            entryButton.onClick.RemoveAllListeners();
             entryButton.onClick.AddListener(() => _controller.CallEntryClick(entryIndex));
         }
     }
