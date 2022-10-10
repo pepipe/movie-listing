@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UI
 {
@@ -20,10 +22,17 @@ namespace UI
 
         public void SetEntriesData(List<string> headers, List<string> entry) {
             for(var i = 0; i < entry.Count; ++i) {
-                var entryGo = _entries[i];
-                entryGo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = headers[i];
-                entryGo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = entry[i];
-                entryGo.SetActive(true);
+                try
+                {
+                    var entryGo = _entries[i];
+                    entryGo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = headers[i];
+                    entryGo.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = entry[i];
+                    entryGo.SetActive(true);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogWarning("Problem setting entry. " + e.Message);
+                }
             }
         }
 

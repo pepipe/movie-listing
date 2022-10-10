@@ -127,11 +127,18 @@ namespace UI {
       if(request.isNetworkError || request.isHttpError) 
         Debug.Log(request.error);
       else {
-        var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
-        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), 
-                                      image.rectTransform.pivot, image.pixelsPerUnit);
-        
-        image.gameObject.SetActive(true);
+        try
+        {
+          var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+          image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+            image.rectTransform.pivot, image.pixelsPerUnit);
+
+          image.gameObject.SetActive(true);
+        }
+        catch (Exception e)
+        {
+          Debug.LogWarning("Problems creating texture. " + e.Message);
+        }
       }
     }
     

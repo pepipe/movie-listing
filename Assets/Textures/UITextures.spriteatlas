@@ -21,7 +21,7 @@ SpriteAtlas:
       crunchedCompression: 0
       sRGB: 1
     platformSettings:
-    - serializedVersion: 2
+    - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
@@ -32,6 +32,7 @@ SpriteAtlas:
       m_AllowsAlphaSplitting: 0
       m_Overridden: 0
       m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 1
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -39,14 +40,16 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: ff2462adac830524db8d5077c220ee6e, type: 3}
     - {fileID: 2800000, guid: 9a06817d1136cdb41961d52de33edd38, type: 3}
     - {fileID: 2800000, guid: d3488c8aae1825f479848ffebb161a12, type: 3}
     - {fileID: 2800000, guid: db38c1b71fefccc499a4d6da6da4cc4d, type: 3}
-    totalSpriteSurfaceArea: 3146752
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: db38c1b71fefccc499a4d6da6da4cc4d, type: 3}
@@ -58,5 +61,6 @@ SpriteAtlas:
   - ArrowPrevious
   - ArrowNext
   - ArrowBack-white
+  m_RenderDataMap: {}
   m_Tag: UITextures
   m_IsVariant: 0
